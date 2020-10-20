@@ -13,7 +13,7 @@ import torch
 from onnxsim import simplify
 from torch.onnx import OperatorExportTypes
 
-sys.path.append('../../')
+sys.path.append('.')
 
 from fastreid.config import get_cfg
 from fastreid.modeling.meta_arch import build_model
@@ -130,7 +130,8 @@ if __name__ == '__main__':
     model.eval()
     logger.info(model)
 
-    inputs = torch.randn(1, 3, cfg.INPUT.SIZE_TEST[0], cfg.INPUT.SIZE_TEST[1])
+    inputs = torch.randn(128, 3, cfg.INPUT.SIZE_TEST[0], cfg.INPUT.SIZE_TEST[1])
+
     onnx_model = export_onnx_model(model, inputs)
 
     model_simp, check = simplify(onnx_model)
